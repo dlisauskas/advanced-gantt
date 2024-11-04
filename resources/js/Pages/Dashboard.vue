@@ -33,8 +33,11 @@ const calculateTaskGroupIndex = (task) => {
 
     // If the current project is not the first one, we need to increase the increment to include the task rows
     if (projectIndex !== 0) {
-        let previousProject = projects.value[projectIndex - 1];
-        increment = previousProject.rowCount;
+        let previousProjectsRowCounts = projects.value
+            .slice(0, projectIndex)
+            .map((project) => project.rowCount);
+
+        increment = previousProjectsRowCounts.reduce((a, b) => a + b, 0);
     }
 
     const isStage = task.important;
