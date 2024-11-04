@@ -1,7 +1,8 @@
 export default class Popup {
-    constructor(parent, custom_html) {
+    constructor(parent, custom_html, svg) {
         this.parent = parent;
         this.custom_html = custom_html;
+        this.svg = svg;
         this.make();
     }
 
@@ -44,11 +45,23 @@ export default class Popup {
             position_meta = options.target_element.getBBox();
         }
 
+        const chartHeight = this.svg.getBoundingClientRect().height;
+
+        if (position_meta.y + position_meta.height + 100 > chartHeight) {
+            this.parent.style.top = position_meta.y - this.parent.clientHeight - 10 + "px";
+            this.pointer.style.bottom = "-10px";
+            this.pointer.style.top = "auto";
+            this.pointer.style.transform = "rotate(180deg)";
+        } else {
+            this.parent.style.top = position_meta.y + position_meta.height + 10 + "px";
+            this.pointer.style.top = "-10px";
+            this.pointer.style.bottom = "auto";
+            this.pointer.style.transform = "rotate(0deg)";
+        }
+
         this.parent.style.left = options.x - this.parent.clientWidth / 2 + "px";
-        this.parent.style.top = position_meta.y + position_meta.height + 10 + "px";
 
         this.pointer.style.left = this.parent.clientWidth / 2 + "px";
-        this.pointer.style.top = "-15px";
 
         // show
         this.parent.style.opacity = 1;

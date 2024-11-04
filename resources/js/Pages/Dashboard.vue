@@ -117,7 +117,6 @@ onMounted(() => {
         view_mode: "Week",
         date_format: "YYYY-MM-DD",
         readonly: true,
-        popup: false,
         today_button: false,
         enable_grouping: true,
         on_click: (task) => focusTask(task),

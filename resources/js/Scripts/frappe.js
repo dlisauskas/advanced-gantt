@@ -1265,7 +1265,7 @@ export default class Gantt {
     show_popup(options) {
         if (this.options.popup === false) return;
         if (!this.popup) {
-            this.popup = new Popup(this.$popup_wrapper, this.options.popup);
+            this.popup = new Popup(this.$popup_wrapper, this.options.popup, this.$svg);
         }
         this.popup.show(options);
     }
