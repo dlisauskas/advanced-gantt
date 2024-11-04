@@ -44,6 +44,8 @@ const calculateTaskGroupIndex = (task) => {
         increment = previousProjectsRowCounts.reduce((a, b) => a + b, 0);
     }
 
+    if (task.display === undefined) task.display = true;
+
     const isStage = task.important;
     if (isStage) {
         task.group = increment;
