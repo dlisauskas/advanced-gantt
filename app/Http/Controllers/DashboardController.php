@@ -17,17 +17,14 @@ class DashboardController extends Controller
             [
                 'id' => '1',
                 'name' => 'Project 1',
-                'rowCount' => 1,
             ],
             [
                 'id' => '2',
                 'name' => 'Project 2',
-                'rowCount' => 1,
             ],
             [
                 'id' => '3',
                 'name' => 'Project 3',
-                'rowCount' => 1,
             ],
         ];
 

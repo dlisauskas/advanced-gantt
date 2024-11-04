@@ -31,6 +31,10 @@ const calculateTaskGroupIndex = (task) => {
 
     let increment = 0;
 
+    if (projects.value[projectIndex].rowCount === undefined) {
+        projects.value[projectIndex].rowCount = 1;
+    }
+
     // If the current project is not the first one, we need to increase the increment to include the task rows
     if (projectIndex !== 0) {
         let previousProjectsRowCounts = projects.value
