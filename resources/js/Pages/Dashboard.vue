@@ -197,6 +197,10 @@ body {
     overflow-x: auto;
 }
 
+.gantt-container {
+    overflow: initial;
+}
+
 .side-table {
     position: sticky;
     left: 0;
