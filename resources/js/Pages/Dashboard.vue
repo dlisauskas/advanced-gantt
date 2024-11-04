@@ -204,7 +204,6 @@ body {
     position: sticky;
     left: 0;
     z-index: 99;
-    background: white;
     min-width: 100px;
 }
 
@@ -214,9 +213,11 @@ body {
 
 .side-table thead th {
     height: 59px;
+    background: white;
 }
 
 .side-table tr td {
+    background: white;
     white-space: nowrap;
     vertical-align: middle;
     height: 38px;
