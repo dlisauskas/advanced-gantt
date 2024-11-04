@@ -5,6 +5,12 @@ import { ref, onMounted } from "vue";
 import Gantt from "../Scripts/frappe";
 
 const props = defineProps({
+    projects: {
+        type: Object,
+        default() {
+            return {};
+        },
+    },
     tasks: {
         type: Object,
         default() {
@@ -14,18 +20,7 @@ const props = defineProps({
 });
 
 
-const projects = ref([
-    {
-        id: "1",
-        name: "Project 1",
-        rowCount: 1,
-    },
-    {
-        id: "2",
-        name: "Project 2",
-        rowCount: 1,
-    },
-]);
+const projects = ref(props.projects);
 
 let gantt = null;
 
