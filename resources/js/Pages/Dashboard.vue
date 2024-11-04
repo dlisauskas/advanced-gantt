@@ -118,6 +118,7 @@ onMounted(() => {
         date_format: "YYYY-MM-DD",
         readonly: true,
         popup: false,
+        today_button: false,
         enable_grouping: true,
         on_click: (task) => focusTask(task),
         on_toggle: (task) => toggleTask(task),
@@ -150,7 +151,7 @@ onMounted(() => {
                             <table id="sideTable">
                                 <thead>
                                     <tr>
-                                        <th style="text-align: left">
+                                        <th style="text-align: left; position: sticky; top: 0; background: white;">
                                             <p>Project</p>
                                         </th>
                                     </tr>
@@ -175,9 +176,7 @@ onMounted(() => {
                                 </tbody>
                             </table>
                         </div>
-                        <div>
-                            <div class="gantt-target"></div>
-                        </div>
+                        <div class="gantt-target"></div>
                     </div>
                 </div>
             </div>
@@ -195,6 +194,7 @@ body {
     position: relative;
     width: 100%;
     overflow-x: auto;
+    max-height: calc(100vh - 272px);
 }
 
 .gantt-container {
