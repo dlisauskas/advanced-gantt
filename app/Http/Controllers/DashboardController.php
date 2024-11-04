@@ -15,17 +15,17 @@ class DashboardController extends Controller
     {
         $projects = [
             [
-                'id' => 1,
+                'id' => '1',
                 'name' => 'Project 1',
                 'rowCount' => 1,
             ],
             [
-                'id' => 2,
+                'id' => '2',
                 'name' => 'Project 2',
                 'rowCount' => 1,
             ],
             [
-                'id' => 3,
+                'id' => '3',
                 'name' => 'Project 3',
                 'rowCount' => 1,
             ],
