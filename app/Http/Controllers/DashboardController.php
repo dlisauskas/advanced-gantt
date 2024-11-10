@@ -68,6 +68,7 @@ class DashboardController extends Controller
                 'end' => '2024-10-10',
                 'progress' => 0,
                 'dependencies' => '',
+                'children' => ['102', '103'],
                 'display' => true,
                 'project_id' => '1',
                 'stage_id' => '1',

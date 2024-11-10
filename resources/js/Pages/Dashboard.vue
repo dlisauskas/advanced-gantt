@@ -78,9 +78,15 @@ props.tasks.map((task) => calculateTaskGroupIndex(task));
 const toggleTask = (task) => {
     if (!task.children?.length) return;
 
+    // If task was previously collapsed, now we need to display it and vice versa
+    const needToShow = task.collapsed ? true : false;
+
     // Hide/show the children
     gantt.displayed_tasks.map((t) => {
-        if (task.children.includes(t.id)) t.display = !t.display;
+        if (task.children.includes(t.id)) {
+            t.collapsed = !needToShow;
+            t.display = needToShow;
+        }
     });
 
     const project = projects.value.find(
@@ -103,8 +109,10 @@ const toggleProject = (project) => {
     gantt.displayed_tasks.map((t) => {
         if (t.project_id === project.id && t.important)
             t.collapsed = project.collapsed;
-        if (t.project_id === project.id && !t.important)
+        if (t.project_id === project.id && !t.important) {
+            t.collapsed = project.collapsed;
             t.display = !project.collapsed;
+        }
     });
 
     projects.value.map((project) => (project.rowCount = 1));

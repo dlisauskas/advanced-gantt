@@ -294,7 +294,7 @@ export default class Bar {
     }
 
     draw_toggle() {
-        if (!this.task.important) return;
+        if (!this.task.children?.length) return;
 
         const bar = this.$bar;
         const toggle_size = bar.getHeight() - 2;
