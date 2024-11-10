@@ -93,21 +93,38 @@ export default class Bar {
     }
 
     draw_bar() {
-        this.$bar = createSVG("rect", {
-            x: this.x,
-            y: this.y,
-            width: this.width,
-            height: this.height,
-            rx: this.corner_radius,
-            ry: this.corner_radius,
-            class:
-                "bar" +
-                (/^((?!chrome|android).)*safari/i.test(navigator.userAgent) &&
-                    !this.task.important
-                    ? " safari"
-                    : ""),
-            append_to: this.bar_group,
-        });
+        if (this.task.custom_class === "bar-milestone") {
+            this.$bar = createSVG("polygon", {
+                x: this.x,
+                y: this.y,
+                width: this.width,
+                height: this.height,
+                points: `${this.x + this.width / 2},${this.y} ${this.x + this.width},${this.y + this.height / 2} ${this.x + this.width / 2},${this.y + this.height} ${this.x},${this.y + this.height / 2}`,
+                class:
+                    "bar" +
+                    (/^((?!chrome|android).)*safari/i.test(navigator.userAgent) &&
+                        !this.task.important
+                        ? " safari"
+                        : ""),
+                append_to: this.bar_group,
+            });
+        } else {
+            this.$bar = createSVG("rect", {
+                x: this.x,
+                y: this.y,
+                width: this.width,
+                height: this.height,
+                rx: this.corner_radius,
+                ry: this.corner_radius,
+                class:
+                    "bar" +
+                    (/^((?!chrome|android).)*safari/i.test(navigator.userAgent) &&
+                        !this.task.important
+                        ? " safari"
+                        : ""),
+                append_to: this.bar_group,
+            });
+        }
 
         animateSVG(this.$bar, "width", 0, this.width);
 

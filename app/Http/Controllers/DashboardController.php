@@ -87,12 +87,13 @@ class DashboardController extends Controller
                 'id' => '103',
                 'name' => 'Final Approval',
                 'start' => '2024-10-16',
-                'end' => '2024-10-20',
+                'end' => '2024-10-16',
                 'progress' => 0,
                 'dependencies' => '',
                 'display' => true,
                 'project_id' => '1',
                 'stage_id' => '1',
+                'custom_class' => 'bar-milestone',
             ],
 
 // Stage: Lease
