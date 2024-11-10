@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head } from "@inertiajs/vue3";
+import { Head, Link } from "@inertiajs/vue3";
 import { ref, onMounted } from "vue";
 import Gantt from "../Scripts/frappe";
 import { useDebounceFn } from "@vueuse/core";
@@ -18,6 +18,14 @@ const props = defineProps({
             return {};
         },
     },
+    previousPageRoute: {
+        type: String,
+        default: null,
+    },
+    nextPageRoute: {
+        type: String,
+        default: null,
+    },
 });
 
 const projects = ref(props.projects);
@@ -28,6 +36,8 @@ const calculateTaskGroupIndex = (task) => {
     const projectIndex = projects.value.findIndex(
         (project) => project.id === task.project_id
     );
+
+    if (projectIndex === -1) return;
 
     let increment = 0;
 
@@ -174,7 +184,29 @@ onMounted(() => {
                                 <thead>
                                     <tr>
                                         <th class="text-left sticky top-0 bg-white">
-                                            <p>Project</p>
+                                            <div class="flex items-center gap-x-4">
+                                                <p>Project</p>
+                                                <div class="flex items-center gap-x-1">
+                                                    <Link
+                                                        :href="previousPageRoute"
+                                                        class="w-5"
+                                                        :disabled="previousPageRoute === null"
+                                                        :class="{ 'opacity-50 pointer-events-none': previousPageRoute === null }"
+                                                        title="Previous page"
+                                                    >
+                                                        <img src="@images/chevron-left.svg" class="w-5" />
+                                                    </Link>
+                                                    <Link
+                                                        :href="nextPageRoute"
+                                                        class="w-5"
+                                                        :disabled="nextPageRoute === null"
+                                                        :class="{ 'opacity-50 pointer-events-none': nextPageRoute === null }"
+                                                        title="Next page"
+                                                    >
+                                                        <img src="@images/chevron-right.svg" class="w-5" />
+                                                    </Link>
+                                                </div>
+                                            </div>
                                         </th>
                                     </tr>
                                 </thead>
