@@ -46,6 +46,7 @@ const DEFAULT_OPTIONS = {
     auto_move_label: true,
     today_button: true,
     view_mode_select: false,
+    collapsible: false,
 };
 
 export default class Gantt {

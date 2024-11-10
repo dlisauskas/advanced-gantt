@@ -89,17 +89,9 @@ const toggleTask = (task) => {
         }
     });
 
-    const project = projects.value.find(
-        (project) => project.id === task.project_id
-    );
-
-    projects.value.map((project) => (project.rowCount = 1));
-    gantt.displayed_tasks
-        .filter((t) => t.display)
-        .map((task) => calculateTaskGroupIndex(task));
-
     task.collapsed = !task.collapsed;
-    gantt.refresh(gantt.displayed_tasks.filter((t) => t.display));
+
+    refreshGantt();
 };
 
 const toggleProject = (project) => {
@@ -115,11 +107,14 @@ const toggleProject = (project) => {
         }
     });
 
+    refreshGantt();
+};
+
+const refreshGantt = () => {
     projects.value.map((project) => (project.rowCount = 1));
     gantt.displayed_tasks
         .filter((t) => t.display)
         .map((task) => calculateTaskGroupIndex(task));
-
     gantt.refresh(gantt.displayed_tasks.filter((t) => t.display));
 };
 
@@ -199,7 +194,7 @@ onMounted(() => {
                                                         :href="previousPageRoute"
                                                         class="w-5"
                                                         :disabled="previousPageRoute === null"
-                                                        :class="{ 'opacity-50 pointer-events-none': previousPageRoute === null }"
+                                                        :class="{ 'opacity-30 pointer-events-none': previousPageRoute === null }"
                                                         title="Previous page"
                                                     >
                                                         <img src="@images/chevron-left.svg" class="w-5" />
@@ -208,7 +203,7 @@ onMounted(() => {
                                                         :href="nextPageRoute"
                                                         class="w-5"
                                                         :disabled="nextPageRoute === null"
-                                                        :class="{ 'opacity-50 pointer-events-none': nextPageRoute === null }"
+                                                        :class="{ 'opacity-30 pointer-events-none': nextPageRoute === null }"
                                                         title="Next page"
                                                     >
                                                         <img src="@images/chevron-right.svg" class="w-5" />
@@ -262,6 +257,12 @@ onMounted(() => {
 body {
     overflow-x: hidden;
     font-family: "Inter";
+}
+
+img {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .chart-container {

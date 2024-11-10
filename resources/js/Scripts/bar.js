@@ -85,7 +85,10 @@ export default class Bar {
         }
         this.draw_label();
         this.draw_resize_handles();
-        this.draw_toggle();
+
+        if (this.gantt.options.collapsible) {
+            this.draw_toggle();
+        }
 
         if (this.task.thumbnail) {
             this.draw_thumbnail();
