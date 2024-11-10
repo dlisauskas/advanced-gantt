@@ -3,6 +3,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import { ref, onMounted } from "vue";
 import Gantt from "../Scripts/frappe";
+import { useDebounceFn } from "@vueuse/core";
 
 const props = defineProps({
     projects: {
@@ -18,7 +19,6 @@ const props = defineProps({
         },
     },
 });
-
 
 const projects = ref(props.projects);
 
@@ -86,6 +86,25 @@ const toggleTask = (task) => {
     gantt.refresh(gantt.displayed_tasks.filter((t) => t.display));
 };
 
+const toggleProject = (project) => {
+    project.collapsed = !project.collapsed;
+
+    // Hide/show the project tasks
+    gantt.displayed_tasks.map((t) => {
+        if (t.project_id === project.id && t.important)
+            t.collapsed = project.collapsed;
+        if (t.project_id === project.id && !t.important)
+            t.display = !project.collapsed;
+    });
+
+    projects.value.map((project) => (project.rowCount = 1));
+    gantt.displayed_tasks
+        .filter((t) => t.display)
+        .map((task) => calculateTaskGroupIndex(task));
+
+    gantt.refresh(gantt.displayed_tasks.filter((t) => t.display));
+};
+
 const focusTask = (task) => {
     let elements = [task.id];
     if (task.children) {
@@ -104,6 +123,10 @@ const focusTask = (task) => {
     gantt.refresh(gantt.displayed_tasks.filter((t) => t.display));
 };
 
+const debouncedFocusTask = useDebounceFn(focusTask, 100);
+const debouncedToggleTask = useDebounceFn(toggleTask, 100);
+const debouncedToggleProject = useDebounceFn(toggleProject, 100);
+
 onMounted(() => {
     gantt = new Gantt(".gantt-target", props.tasks, {
         header_height: 50,
@@ -119,8 +142,8 @@ onMounted(() => {
         readonly: true,
         today_button: false,
         enable_grouping: true,
-        on_click: (task) => focusTask(task),
-        on_toggle: (task) => toggleTask(task),
+        on_click: (task) => debouncedFocusTask(task),
+        on_toggle: (task) => debouncedToggleTask(task),
     });
     gantt.displayed_tasks = gantt.tasks;
 });
@@ -150,7 +173,7 @@ onMounted(() => {
                             <table id="sideTable">
                                 <thead>
                                     <tr>
-                                        <th style="text-align: left; position: sticky; top: 0; background: white;">
+                                        <th class="text-left sticky top-0 bg-white">
                                             <p>Project</p>
                                         </th>
                                     </tr>
@@ -162,13 +185,25 @@ onMounted(() => {
                                     >
                                         <tr v-for="index in project.rowCount">
                                             <td>
-                                                <p style="margin: 0">
-                                                    {{
-                                                        index === 1
-                                                            ? project.name
-                                                            : ""
-                                                    }}
-                                                </p>
+                                                <div
+                                                    v-if="index === 1"
+                                                    class="flex items-center gap-x-2"
+                                                >
+                                                    <p style="margin: 0">
+                                                        {{ project.name }}
+                                                    </p>
+                                                    <button
+                                                        type="button"
+                                                        @click="debouncedToggleProject(project)"
+                                                        :title="project.collapsed ? 'Expand' : 'Collapse'"
+                                                    >
+                                                        <img
+                                                            src="@images/chevron-up.svg"
+                                                            :class="project.collapsed ? 'transform rotate-180' : ''"
+                                                            class="w-5 transition-transform duration-200 ease-in-out"
+                                                        />
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
                                     </template>
