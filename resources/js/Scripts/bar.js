@@ -28,7 +28,13 @@ export default class Bar {
         this.compute_y();
         this.compute_duration();
         this.corner_radius = this.gantt.options.bar_corner_radius;
-        this.width = this.gantt.options.column_width * this.duration;
+
+        if(this.task.custom_class === "bar-milestone") {
+            this.width = this.height;
+        } else {
+            this.width = this.gantt.options.column_width * this.duration;
+        }
+
         this.progress_width =
             this.gantt.options.column_width *
             this.duration *
