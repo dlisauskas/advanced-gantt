@@ -150,11 +150,12 @@ onMounted(() => {
         bar_corner_radius: 3,
         arrow_curve: 5,
         padding: 18,
-        view_mode: "Week",
+        view_mode: "Day",
         date_format: "YYYY-MM-DD",
         readonly: true,
         today_button: false,
         enable_grouping: true,
+        scroll_to: 'today',
         on_click: (task) => debouncedFocusTask(task),
         on_toggle: (task) => debouncedToggleTask(task),
     });

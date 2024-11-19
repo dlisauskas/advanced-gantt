@@ -949,7 +949,8 @@ export default class Gantt {
     }
 
     scroll_today() {
-        this.set_scroll_position(new Date());
+        const highlight = document.querySelector(".current-date-highlight");
+        highlight.scrollIntoView({ behavior: "instant", block: "nearest", inline: "center" });
     }
 
     bind_grid_click() {
