@@ -149,7 +149,7 @@ onMounted(() => {
         bar_height: 20,
         bar_corner_radius: 3,
         arrow_curve: 5,
-        padding: 18,
+        padding: 24,
         view_mode: "Day",
         date_format: "YYYY-MM-DD",
         readonly: true,
@@ -289,7 +289,7 @@ img {
 }
 
 .side-table thead th {
-    height: 59px;
+    height: 61px;
     background: white;
 }
 
@@ -297,7 +297,7 @@ img {
     background: white;
     white-space: nowrap;
     vertical-align: middle;
-    height: 38px;
+    height: 44px;
     border-bottom: 1px solid #f1ecef;
 }
 
@@ -313,5 +313,10 @@ g.arrow {
 .gantt-target .bar-milestone .bar,
 .gantt-target .bar-milestone .bar-progress {
     fill: tomato;
+}
+
+.bar-date {
+    font-size: 10px;
+    fill: #333;
 }
 </style>

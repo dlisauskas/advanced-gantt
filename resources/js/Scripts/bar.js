@@ -89,6 +89,7 @@ export default class Bar {
             this.prepare_expected_progress_values();
             this.draw_expected_progress_bar();
         }
+        this.draw_dates();
         this.draw_label();
         this.draw_resize_handles();
 
@@ -191,6 +192,46 @@ export default class Bar {
         this.gantt.$lower_header.prepend($date_highlight);
 
         animateSVG(this.$bar_progress, "width", 0, this.progress_width);
+    }
+
+    draw_dates() {
+        if (this.invalid) return;
+        const bar = this.$bar;
+        const { start, end } = this.task;
+        const format = "DD/MM";
+
+        if (start === end) {
+            const $date = createSVG("text", {
+                x: bar.getX() + bar.getWidth() - 4,
+                y: bar.getY() + bar.getHeight() + 6,
+                innerHTML: date_utils.format(new Date(start), format, this.gantt.options.language),
+                class: "bar-date",
+                append_to: this.bar_group,
+            });
+            animateSVG($date, "opacity", 0, 1);
+            return;
+        }
+
+        const startText = date_utils.format(new Date(start), format, this.gantt.options.language);
+
+        const $start_text = createSVG("text", {
+            x: bar.getX(),
+            y: bar.getY() - 2,
+            innerHTML: startText,
+            class: "bar-date",
+            append_to: this.bar_group,
+        });
+        animateSVG($start_text, "opacity", 0, 1);
+
+        const endText = date_utils.format(new Date(end), format, this.gantt.options.language);
+        const $end_text = createSVG("text", {
+            x: bar.getEndX() - 25,
+            y: bar.getY() - 2,
+            innerHTML: endText,
+            class: "bar-date",
+            append_to: this.bar_group,
+        });
+        animateSVG($end_text, "opacity", 0, 1);
     }
 
     draw_label() {
