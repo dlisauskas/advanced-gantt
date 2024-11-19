@@ -215,7 +215,7 @@ export default class Bar {
         const startText = date_utils.format(new Date(start), format, this.gantt.options.language);
 
         const $start_text = createSVG("text", {
-            x: bar.getX(),
+            x: bar.getX() + 2,
             y: bar.getY() - 2,
             innerHTML: startText,
             class: "bar-date",
@@ -225,7 +225,7 @@ export default class Bar {
 
         const endText = date_utils.format(new Date(end), format, this.gantt.options.language);
         const $end_text = createSVG("text", {
-            x: bar.getEndX() - 25,
+            x: bar.getEndX() - 30,
             y: bar.getY() - 2,
             innerHTML: endText,
             class: "bar-date",
