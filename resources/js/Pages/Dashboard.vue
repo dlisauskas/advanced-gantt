@@ -150,7 +150,7 @@ onMounted(() => {
         bar_corner_radius: 3,
         arrow_curve: 5,
         padding: 24,
-        view_mode: "Day",
+        view_mode: "Month",
         date_format: "YYYY-MM-DD",
         readonly: true,
         today_button: false,
@@ -318,5 +318,15 @@ g.arrow {
 .bar-date {
     font-size: 10px;
     fill: #333;
+}
+
+.current-date-highlight::after {
+    content: attr(data-date);
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--dark-blue);
+    font-size: 10px;
 }
 </style>
